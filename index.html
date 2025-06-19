@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPIKETUNE Web</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif; /* A nice modern font */
+      overscroll-behavior-y: contain; /* Prevents pull-to-refresh on mobile when scrolling body */
+    }
+    /* For custom scrollbars, optional but enhances aesthetics */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px; /* Added height for horizontal scrollbars */
+    }
+    ::-webkit-scrollbar-track {
+      background: #18181b; /* Dark track, matching bg-neutral-900 */
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3f3f46; /* Slightly lighter thumb, matching bg-neutral-700 */
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #52525b; /* Lighter thumb on hover, matching bg-neutral-600 */
+    }
+
+    /* Custom thin scrollbar for horizontal sections */
+    .scrollbar-thin {
+      scrollbar-width: thin; /* For Firefox */
+      scrollbar-color: #3f3f46 #18181b; /* thumb and track color for Firefox */
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+      height: 6px; /* Adjust height for horizontal scrollbar */
+      width: 6px;  /* Adjust width if used on vertical scroll */
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background-color: #3f3f46; /* Tailwind neutral-700 */
+      border-radius: 3px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background-color: transparent; /* Make track transparent or match section bg */
+    }
+
+    /* Shimmer animation for Skeleton Loaders */
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+    .animate-shimmer {
+      animation: shimmer 2s infinite linear;
+      background: linear-gradient(to right, #3f3f46 4%, #52525b 25%, #3f3f46 36%); /* Tailwind neutral-700, neutral-600, neutral-700 */
+      background-size: 2000px 100%;
+    }
+
+    /* Page transition animation */
+    @keyframes pageEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(8px); /* Subtle upward movement */
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+    .page-content-wrapper {
+      animation: pageEnter 0.3s ease-out forwards;
+    }
+
+    /* Notification animations */
+    @keyframes slideInFromRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOutToRight {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    .notification-slide-enter {
+      animation: slideInFromRight 0.3s ease-out forwards;
+    }
+
+    .notification-slide-exit {
+      animation: slideOutToRight 0.3s ease-in forwards;
+    }
+
+    /* Player Bar Animations */
+    @keyframes playerBarSlideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes playerBarSlideDown { /* Will be applied when hiding, though direct removal might be used */
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(100%); opacity: 0; }
+    }
+    .player-bar-slide-up {
+      animation: playerBarSlideUp 0.3s ease-out forwards;
+    }
+    /* Player bar will likely be unmounted, so slideDown might not be used directly via class.
+       If needed for a transition library, it's here. */
+
+    /* Show Player Button Animation */
+    @keyframes fadeInPlayerButton {
+      from { opacity: 0; transform: translateY(20px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in-player-button {
+      animation: fadeInPlayerButton 0.3s ease-out 0.1s forwards; /* 0.1s delay */
+    }
+    /* Sidebar transition is handled by Tailwind's transform and transition-transform utilities.
+       No additional custom CSS needed here for the basic slide. */
+
+    /* Profile Dropdown Animation */
+    @keyframes profileDropdownAppear {
+      from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .animate-profile-dropdown {
+      animation: profileDropdownAppear 0.15s ease-out forwards;
+      transform-origin: top right; 
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react-router-dom": "https://esm.sh/react-router-dom@6",
+    "react-router-dom/": "https://esm.sh/react-router-dom@6/",
+    "@/": "./"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-neutral-900 text-neutral-100 antialiased">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
